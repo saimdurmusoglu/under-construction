@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Yapım Aşamasında</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07090F;            /* gece mürekkebi */
+    --ink:#F2F5FA;           /* ana metin */
+    --dim:#7C8798;           /* soluk metin */
+    --line:rgba(150,170,200,.10);
+    --glow-a:#F5B54A;        /* sıcak amber */
+    --glow-b:#3E9E8F;        /* derin deniz yeşili */
+    --card:rgba(13,17,26,.62);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Sora",system-ui,sans-serif;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* --- zemin: ince nokta ızgarası --- */
+  body::before{
+    content:"";position:fixed;inset:0;
+    background-image:radial-gradient(rgba(160,180,210,.12) 1px, transparent 1px);
+    background-size:26px 26px;
+    mask-image:radial-gradient(ellipse 80% 70% at 50% 45%, #000 30%, transparent 100%);
+    -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 45%, #000 30%, transparent 100%);
+    pointer-events:none;
+  }
+
+  /* --- gezinen ışık: iki yumuşak leke --- */
+  .orb{
+    position:fixed;border-radius:50%;
+    filter:blur(90px);opacity:.32;
+    pointer-events:none;
+  }
+  .orb-a{
+    width:46vmax;height:46vmax;
+    background:radial-gradient(circle, var(--glow-a), transparent 62%);
+    top:-18vmax;right:-12vmax;
+    animation:drift-a 26s ease-in-out infinite alternate;
+  }
+  .orb-b{
+    width:40vmax;height:40vmax;
+    background:radial-gradient(circle, var(--glow-b), transparent 62%);
+    bottom:-16vmax;left:-10vmax;
+    animation:drift-b 32s ease-in-out infinite alternate;
+  }
+  @keyframes drift-a{to{transform:translate(-8vmax,6vmax)}}
+  @keyframes drift-b{to{transform:translate(7vmax,-5vmax)}}
+
+  /* --- kart --- */
+  main{
+    position:relative;z-index:1;
+    width:min(720px,100%);
+    text-align:center;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:24px;
+    padding:clamp(48px,8vw,84px) clamp(24px,6vw,64px);
+    backdrop-filter:blur(14px);
+    box-shadow:0 40px 90px -40px rgba(0,0,0,.8);
+    animation:rise .9s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--dim);
+    margin-bottom:26px;
+  }
+
+  .domain{
+    font-weight:800;
+    font-size:clamp(30px,7vw,64px);
+    line-height:1.04;
+    letter-spacing:-.02em;
+    word-break:break-all;
+    background:linear-gradient(100deg, var(--ink) 20%, var(--glow-a) 50%, var(--ink) 80%);
+    background-size:220% 100%;
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent;
+    animation:sheen 7s ease-in-out infinite;
+  }
+  @keyframes sheen{
+    0%,100%{background-position:0% 0}
+    50%{background-position:100% 0}
+  }
+
+  .sub{
+    margin-top:20px;
+    font-weight:300;
+    font-size:clamp(15px,2.4vw,18px);
+    color:var(--dim);
+    line-height:1.7;
+  }
+  .sub em{font-style:normal;color:var(--ink)}
+  .sub .en{
+    display:block;margin-top:6px;
+    font-size:.82em;opacity:.75;
+  }
+
+  /* --- ilerleme çizgisi (imza öğe) --- */
+  .progress{
+    margin:44px auto 0;
+    width:min(360px,86%);
+    height:2px;
+    background:var(--line);
+    border-radius:2px;
+    position:relative;overflow:hidden;
+  }
+  .progress::after{
+    content:"";position:absolute;top:0;bottom:0;left:-35%;width:35%;
+    background:linear-gradient(90deg, transparent, var(--glow-a), var(--glow-b), transparent);
+    animation:sweep 2.8s cubic-bezier(.5,.1,.5,.9) infinite;
+  }
+  @keyframes sweep{to{left:100%}}
+  .progress-label{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--dim);
+    margin-top:14px;
+  }
+
+  footer{
+    margin-top:52px;
+    padding-top:22px;
+    border-top:1px solid var(--line);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;letter-spacing:.14em;
+    color:var(--dim);
+    display:flex;justify-content:center;gap:8px;flex-wrap:wrap;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .orb,.domain,.progress::after{animation:none}
+    main{animation-duration:.01s}
+  }
+</style>
+</head>
+<body>
+  <div class="orb orb-a" aria-hidden="true"></div>
+  <div class="orb orb-b" aria-hidden="true"></div>
+
+  <main>
+    <p class="eyebrow">Yapım Aşamasında</p>
+
+    <h1 class="domain" id="domain">yükleniyor…</h1>
+
+    <p class="sub">
+      Bu alanda <em>yeni bir şey</em> inşa ediyoruz.<br>
+      Çok yakında hizmetinizdeyiz.
+      <span class="en">This site is under construction — coming soon.</span>
+    </p>
+
+    <div class="progress" role="presentation"></div>
+    <p class="progress-label">Kurulum sürüyor</p>
+
+    <footer>
+      <span id="host-label">—</span>
+      <span>·</span>
+      <span id="year">2026</span>
+    </footer>
+  </main>
+
+<script>
+  var host = location.hostname.replace(/^www\./,'') || 'domain.com';
+  document.getElementById('domain').textContent = host;
+  document.getElementById('host-label').textContent = host.toUpperCase();
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.title = host + ' — Yapım Aşamasında';
+</script>
+</body>
+</html>
